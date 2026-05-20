@@ -10,7 +10,8 @@ import {
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 // Lucide 아이콘 임포트
 import { Zap, Users, ChevronRight, Eye } from 'lucide-react-native';
-import Inform from './components/Modal';
+import Inform from '../components/Modal';
+import { Link } from 'expo-router';
 
 
 const CharacterTestScreen = () => {
@@ -27,64 +28,64 @@ const CharacterTestScreen = () => {
         <View style={styles.mainBox}>
           
           {/* 빠른 검사 섹션 */}
-          <TouchableOpacity 
+        <Link href="/test" asChild>
+        <TouchableOpacity 
             style={styles.sectionButton} 
             activeOpacity={0.6}
-            onPress={() => console.log('빠른 검사 시작')}
-          >
+        >
             <View style={styles.leftContent}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#EEF2FF' }]}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#EEF2FF' }]}>
                 <Zap size={24} color="#4F46E5" fill="#4F46E5" />
-              </View>
-              <View style={{flex:1}}>
+            </View>
+            <View style={{flex:1}}>
                 <Text style={styles.sectionTitle}>빠른 검사</Text>
                 <Text style={styles.sectionSubTitle}>핵심 질문으로 빠르게 확인하기</Text>
-              </View>
+            </View>
             </View>
             <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
-          </TouchableOpacity>
+        </TouchableOpacity>
+        </Link>
+        {/* 구분선 */}
+        <View style={styles.divider} />
 
-          {/* 구분선 */}
-          <View style={styles.divider} />
-
-          {/* 100 검사 섹션 */}
-          <TouchableOpacity 
-            style={styles.sectionButton} 
-            activeOpacity={0.6}
-            onPress={() => setShow100Alert(true)}
-          >
-            <View style={styles.leftContent}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#FFF1F2' }]}>
-                <Users size={24} color="#E11D48" fill="#E11D48" />
-              </View>
-              <View style={{flex:1}}>
-                <Text style={styles.sectionTitle}>100 검사</Text>
-                <Text style={styles.sectionSubTitle}>100가지 질문으로 모든 100여친 인물 검사</Text>
-              </View>
+        {/* 100 검사 섹션 */}
+        <TouchableOpacity 
+        style={styles.sectionButton} 
+        activeOpacity={0.6}
+        onPress={() => setShow100Alert(true)}
+        >
+        <View style={styles.leftContent}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#FFF1F2' }]}>
+            <Users size={24} color="#E11D48" fill="#E11D48" />
             </View>
-            <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
-          </TouchableOpacity>
-
-          {/* 구분선 */}
-         <View style={styles.divider} />
-
-          {/* 빠른 검사 섹션 */}
-          <TouchableOpacity 
-            style={styles.sectionButton} 
-            activeOpacity={0.6}
-            onPress={() => console.log('도감 및 정보')}
-          >
-            <View style={styles.leftContent}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#1e293b18' }]}>
-                <Eye size={24} color="#000000" fill="#ffffff" />
-              </View>
-              <View style={{flex:1}}>
-                <Text style={styles.sectionTitle}>도감 및 정보</Text>
-                <Text style={styles.sectionSubTitle}>빠른 검사에 등록된 여친들 및 기타 정보 보기</Text>
-              </View>
+            <View style={{flex:1}}>
+            <Text style={styles.sectionTitle}>100 검사</Text>
+            <Text style={styles.sectionSubTitle}>100가지 질문으로 모든 100여친 인물 검사</Text>
             </View>
-            <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
-          </TouchableOpacity>
+        </View>
+        <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
+        </TouchableOpacity>
+
+        {/* 구분선 */}
+        <View style={styles.divider} />
+
+        {/* 빠른 검사 섹션 */}
+        <TouchableOpacity 
+        style={styles.sectionButton} 
+        activeOpacity={0.6}
+        onPress={() => console.log('도감 및 정보')}
+        >
+        <View style={styles.leftContent}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#1e293b18' }]}>
+            <Eye size={24} color="#000000" fill="#ffffff" />
+            </View>
+            <View style={{flex:1}}>
+            <Text style={styles.sectionTitle}>도감 및 정보</Text>
+            <Text style={styles.sectionSubTitle}>빠른 검사에 등록된 여친들 및 기타 정보 보기</Text>
+            </View>
+        </View>
+        <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
+        </TouchableOpacity>
 
         </View>
 
@@ -98,11 +99,7 @@ const CharacterTestScreen = () => {
         visible={show100Alert}
         onClose={()=>{setShow100Alert(false)}}
         title='제작 진행 중입니다'
-        message='젠장, 또 나카무라 리키토야. 난 그저 숭배해야만 해. 나카무라 리키토 선생. 화면 너머로 들려오는 당신의 기획력에 다시금 무릎을 꿇고 맙니다.
-
-어떻게 된 사람의 머리에서 40명이 넘는 여자친구의 캐릭터성, 외형, 서사, 그리고 그 개성 넘치는 말투와 특징들이 단 하나도 겹치지 않고 쏟아져 나올 수 있단 말입니까? 당신은 만화가가 아니라 캐릭터 공학의 신입니까? 당신이 한 땀 한 땀 장인 정신으로 여친들을 빚어낼 때, 저는 그저 "질문 딸깍"으로 데이터나 채워 넣으려 했던 제 안일함을 뼈저리게 반성합니다.
-
-보십시오. 신께서는 40명의 개성을 창조하셨으나, 미천한 개발자인 저는 그저 질문 몇 개 구현하다가 뇌 용량 과부하로 프로젝트를 유기하고 말았습니다. '
+        message='연재 끝나는 게 빠를까, 내가 이걸 만드는 게 빠를까'
       ></Inform>
 
     </SafeAreaView>
