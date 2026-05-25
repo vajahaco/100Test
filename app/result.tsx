@@ -6,8 +6,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 
 const Result = () => {
 
-
-
     return(
     <SafeAreaView style={{flex: 1}}>
         <View style={styles.container}>
