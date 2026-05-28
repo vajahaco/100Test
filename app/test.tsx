@@ -14,11 +14,18 @@ const SurveyFlatList = () => {
   const flatListRef = useRef<FlatList<ListItem>>(null);
   
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const inform = useInform(false);
+  const testNotFinishedInform = useInform(false);
   const finishAllAnswerInform = useInform(false);
 
   // 💡 가이드 박스를 0번 데이터로 품은 통합 리스트 생성
   const combinedData: ListItem[] = [{ isGuide: true, id: 'guide' }, ...originalQuestions];
+
+  const getMissedQuestionNumbers = (currentAnswers: Record<number, number> = answers): string => {
+    const missed = originalQuestions
+      .filter(q => !(q.id in currentAnswers))
+      .map(q => q.id);
+    return missed.length > 0 ? `${missed.join(', ')}번` : '';
+  };
 
   const handleSelect = (questionId: number, answerId: number, currentIndex: number) => {
     const currentAnswers = { ...answers, [questionId]: answerId };
@@ -27,22 +34,22 @@ const SurveyFlatList = () => {
     const isAllAnswered = originalQuestions.every(q => q.id in currentAnswers);
 
     // 💡 현재 인덱스가 전체 결합 데이터의 마지막 인덱스보다 작다면 무조건 다음으로 스크롤
-    if (currentIndex < combinedData.length - 1) {
+    if (currentIndex < combinedData.length - 1 && !isAllAnswered) {
       flatListRef.current?.scrollToIndex({
         index: currentIndex + 1,
         animated: true,
       });
     } 
     else if (isAllAnswered) {
-      handleFinish(currentAnswers);
+      finishAllAnswerInform.openInform();
     }
     else {
-      finishAllAnswerInform.openInform();
+      handleFinish(currentAnswers);
     }
   };
 
   const handleFinish = (finalAnswers: Record<number, number>) => {
-    inform.openInform();
+    testNotFinishedInform.openInform();
   };
 
   // 💡 가이드 레이아웃을 내부 아이템 렌더러로 변경
@@ -86,9 +93,8 @@ const SurveyFlatList = () => {
         <View style={styles.card}>
           <Text style={styles.questionNumber}>{item.id} / {originalQuestions.length}</Text>
           
-          {item.situation && (
-            <Text style={styles.situationText}>{item.situation}</Text>
-          )}
+
+          <Text style={styles.situationText}>{item.situation}</Text> 
           <Text style={styles.questionText}>{item.question}</Text>
           
           {item.answers.map((ans) => {
@@ -110,10 +116,10 @@ const SurveyFlatList = () => {
         </View>
 
         <Inform
-          visible={inform.value}
-          onClose={inform.closeInform}
-          title='100그녀 인물 검사 종료!'
-          message='결과 확인하러 가기'
+          visible={testNotFinishedInform.value}
+          onClose={testNotFinishedInform.closeInform}
+          title='검사 미완료!'
+          message= {`[누락 항목: ${getMissedQuestionNumbers()}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`}
         />
 
         <Inform
@@ -122,8 +128,8 @@ const SurveyFlatList = () => {
             finishAllAnswerInform.closeInform();
             router.replace('/result');
           }}
-          title='검사 미완료!'
-          message="빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요."
+          title='100그녀 인물 검사 종료!'
+          message='결과 확인하러 가기'
         />  
       </View>
     );
