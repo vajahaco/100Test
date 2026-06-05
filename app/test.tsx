@@ -1,29 +1,28 @@
-import React, { useRef, useState } from 'react';
+﻿import React, { useRef, useState } from 'react';
 import { FlatList, View, Text, TouchableOpacity, useWindowDimensions, StyleSheet } from 'react-native';
-import { questions as originalQuestions, Question } from '../question';
-import Inform from '../components/Modal';
-import { useInform } from '../hooks';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { questions as originalQuestions } from '../src/data/questionData';
+import { Question } from '../src/types/question';
+import Inform from '../src/components/Inform';
+import { useInform } from '../src/hooks/useInform';
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
 
-// 💡 0번째 가이드 페이지를 위한 더미 타입 선언
 type ListItem = { isGuide: true; id: string } | (Question & { isGuide?: false });
 
 const SurveyFlatList = () => {
   const { height } = useWindowDimensions();
   const flatListRef = useRef<FlatList<ListItem>>(null);
-  
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const testNotFinishedInform = useInform(false);
   const finishAllAnswerInform = useInform(false);
 
-  // 💡 가이드 박스를 0번 데이터로 품은 통합 리스트 생성
   const combinedData: ListItem[] = [{ isGuide: true, id: 'guide' }, ...originalQuestions];
 
   const getMissedQuestionNumbers = (currentAnswers: Record<number, number> = answers): string => {
     const missed = originalQuestions
-      .filter(q => !(q.id in currentAnswers))
-      .map(q => q.id);
+      .filter((q) => !(q.id in currentAnswers))
+      .map((q) => q.id);
     return missed.length > 0 ? `${missed.join(', ')}번` : '';
   };
 
@@ -31,19 +30,16 @@ const SurveyFlatList = () => {
     const currentAnswers = { ...answers, [questionId]: answerId };
     setAnswers(currentAnswers);
 
-    const isAllAnswered = originalQuestions.every(q => q.id in currentAnswers);
+    const isAllAnswered = originalQuestions.every((q) => q.id in currentAnswers);
 
-    // 💡 현재 인덱스가 전체 결합 데이터의 마지막 인덱스보다 작다면 무조건 다음으로 스크롤
     if (currentIndex < combinedData.length - 1 && !isAllAnswered) {
       flatListRef.current?.scrollToIndex({
         index: currentIndex + 1,
         animated: true,
       });
-    } 
-    else if (isAllAnswered) {
+    } else if (isAllAnswered) {
       finishAllAnswerInform.openInform();
-    }
-    else {
+    } else {
       handleFinish(currentAnswers);
     }
   };
@@ -52,7 +48,6 @@ const SurveyFlatList = () => {
     testNotFinishedInform.openInform();
   };
 
-  // 💡 가이드 레이아웃을 내부 아이템 렌더러로 변경
   const renderGuideItem = () => (
     <View style={[styles.page, { height }]}>
       <View style={styles.guideBox}>
@@ -63,21 +58,18 @@ const SurveyFlatList = () => {
         </View>
         <Text style={styles.guideText}>
           <Text style={styles.highlightText}>상하 스크롤</Text>
-          해서 전/후 질문창으로 넘어갈 수 있습니다.{"\n"}
-          질문에 답변시 자동으로 다음 질문으로 넘어갑니다.{"\n"}{"\n"}
-          
+          해서 전/후 질문창으로 넘어갈 수 있습니다. {'\n'}
+          질문에 답변시 자동으로 다음 질문으로 넘어갑니다. {'\n'}{'\n'}
           모든 질문은{' '}
           <Text style={styles.highlightText}>상황</Text>,{' '}
           <Text style={styles.highlightText}>질문</Text>,{' '}
-          <Text style={styles.highlightText}>답변 5개</Text>로 구성됩니다.{"\n"}
-          
+          <Text style={styles.highlightText}>답변 5개</Text>로 구성됩니다. {'\n'}
           <Text style={styles.highlightText}>상황</Text>을 확인하고{' '}
           <Text style={styles.highlightText}>질문</Text>에 가장 알맞다 생각되는{' '}
-          <Text style={styles.highlightText}>답변</Text>을 골라주세요!{'\n'}{'\n'}
+          <Text style={styles.highlightText}>답변</Text>을 골라주세요! {'\n'}{'\n'}
         </Text>
-        
-        {/* 첫 페이지에서 다음으로 넘어갈 수 있는 유도 버튼 추가 */}
-        <TouchableOpacity 
+
+        <TouchableOpacity
           style={styles.startButton}
           onPress={() => flatListRef.current?.scrollToIndex({ index: 1, animated: true })}
         >
@@ -87,64 +79,58 @@ const SurveyFlatList = () => {
     </View>
   );
 
-  const renderQuestionItem = (item: Question, index: number) => {
-    return (
-      <View style={[styles.page, { height }]}>
-        <View style={styles.card}>
-          <Text style={styles.questionNumber}>{item.id} / {originalQuestions.length}</Text>
-          
+  const renderQuestionItem = (item: Question, index: number) => (
+    <View style={[styles.page, { height }]}>
+      <View style={styles.card}>
+        <Text style={styles.questionNumber}>{item.id} / {originalQuestions.length}</Text>
+        <Text style={styles.situationText}>{item.situation}</Text>
+        <Text style={styles.questionText}>{item.question}</Text>
 
-          <Text style={styles.situationText}>{item.situation}</Text> 
-          <Text style={styles.questionText}>{item.question}</Text>
-          
-          {item.answers.map((ans) => {
-            const isSelected = answers[item.id] === ans.id;
+        {item.answers.map((ans) => {
+          const isSelected = answers[item.id] === ans.id;
 
-            return (
-              <TouchableOpacity 
-                key={ans.id} 
-                style={[styles.button, isSelected && styles.selectedButton]}
-                activeOpacity={0.7}
-                onPress={() => handleSelect(item.id, ans.id, index)}
-              >
-                <Text style={[styles.buttonText, isSelected && styles.selectedButtonText]}>
-                  {ans.answer}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-
-        <Inform
-          visible={testNotFinishedInform.value}
-          onClose={testNotFinishedInform.closeInform}
-          title='검사 미완료!'
-          message= {`[누락 항목: ${getMissedQuestionNumbers()}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`}
-        />
-
-        <Inform
-          visible={finishAllAnswerInform.value}
-          onClose={() => {
-            finishAllAnswerInform.closeInform();
-            router.replace('/result');
-          }}
-          title='100그녀 인물 검사 종료!'
-          message='결과 확인하러 가기'
-        />  
+          return (
+            <TouchableOpacity
+              key={ans.id}
+              style={[styles.button, isSelected && styles.selectedButton]}
+              activeOpacity={0.7}
+              onPress={() => handleSelect(item.id, ans.id, index)}
+            >
+              <Text style={[styles.buttonText, isSelected && styles.selectedButtonText]}>
+                {ans.answer}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
-    );
-  };
+
+      <Inform
+        visible={testNotFinishedInform.value}
+        onClose={testNotFinishedInform.closeInform}
+        title='검사 미완료!'
+        message={`[누락 항목: ${getMissedQuestionNumbers()}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`}
+      />
+
+      <Inform
+        visible={finishAllAnswerInform.value}
+        onClose={() => {
+          finishAllAnswerInform.closeInform();
+          router.replace('/result');
+        }}
+        title='100그녀 인물 검사 종료!'
+        message='결과 확인하러 가기'
+      />
+    </View>
+  );
 
   return (
     <FlatList
       ref={flatListRef}
       data={combinedData}
-      renderItem={({ item, index }) => 
-        item.isGuide ? renderGuideItem() : renderQuestionItem(item, index)
-      }
+      renderItem={({ item, index }) => (item.isGuide ? renderGuideItem() : renderQuestionItem(item, index))}
       keyExtractor={(item) => (item.isGuide ? item.id : item.id.toString())}
       pagingEnabled
-      scrollEnabled={true}
+      scrollEnabled
       getItemLayout={(_, index) => ({
         length: height,
         offset: height * index,
@@ -168,20 +154,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 30,
     borderRadius: 24,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 5,
   },
   questionNumber: { fontSize: 16, color: '#94A3B8', marginBottom: 8, fontWeight: '600' },
-  situationText: { 
-    fontSize: 15, 
-    color: '#64748B', 
-    textAlign: 'center', 
+  situationText: {
+    fontSize: 15,
+    color: '#64748B',
+    textAlign: 'center',
     marginBottom: 10,
     fontWeight: '500',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   questionText: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginBottom: 40 },
   button: {
@@ -222,19 +208,18 @@ const styles = StyleSheet.create({
   highlightText: {
     fontWeight: 'bold',
     color: '#0d47a1',
-    fontSize: 16,   
+    fontSize: 16,
   },
   startButton: {
     marginTop: 20,
-    backgroundColor: '#0d47a1',
+    backgroundColor: '#4F46E5',
     paddingVertical: 16,
     borderRadius: 16,
-    width: '100%'
   },
   startButtonText: {
     color: '#fff',
-    textAlign: 'center',
     fontSize: 18,
-    fontWeight: 'bold'
-  }
+    fontWeight: '700',
+    textAlign: 'center',
+  },
 });
