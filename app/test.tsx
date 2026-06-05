@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { questions as originalQuestions } from '../src/data/questionData';
 import { Question } from '../src/types/question';
 import Inform from '../src/components/Inform';
+import AnswerButton from '../src/components/AnswerButton';
 import { useInform } from '../src/hooks/useInform';
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
@@ -90,16 +91,12 @@ const SurveyFlatList = () => {
           const isSelected = answers[item.id] === ans.id;
 
           return (
-            <TouchableOpacity
+            <AnswerButton
               key={ans.id}
-              style={[styles.button, isSelected && styles.selectedButton]}
-              activeOpacity={0.7}
+              answer={ans.answer}
+              selected={isSelected}
               onPress={() => handleSelect(item.id, ans.id, index)}
-            >
-              <Text style={[styles.buttonText, isSelected && styles.selectedButtonText]}>
-                {ans.answer}
-              </Text>
-            </TouchableOpacity>
+            />
           );
         })}
       </View>

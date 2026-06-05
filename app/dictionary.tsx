@@ -1,9 +1,11 @@
 ﻿import React, { useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, router } from 'expo-router';
-import { ArrowLeft, Search, Sparkles, Heart, Smile, Activity, Eye } from 'lucide-react-native';
+import { router } from 'expo-router';
+import { Search, Sparkles, Heart, Smile, Activity, Eye } from 'lucide-react-native';
 import { ArrowRight } from 'lucide-react-native/icons';
+import ScreenHeader from '../src/components/ScreenHeader';
+import CharacterCard from '../src/components/CharacterCard';
 
 const mockCharacters = [
   { id: '1', name: '하나조노 하카리', description: '사교성이 좋고 연애 정보력이 뛰어난 행동파 여친', tag: '외향형 / 우호형', color: '#FFF1F2', iconColor: '#c2479d' },
@@ -23,19 +25,12 @@ const DictionaryScreen = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom', 'left', 'right']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton} onPress={() => router.back()} activeOpacity={0.6}>
-          <ArrowLeft size={22} color="#1E293B" />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          여친 도감 및 정보
-        </Text>
-
-        <TouchableOpacity style={styles.headerButton} onPress={() => router.push('/credit')} activeOpacity={0.6}>
-          <ArrowRight size={22} color="#1E293B" />
-        </TouchableOpacity>
-      </View>
+      <ScreenHeader
+        title="여친 도감 및 정보"
+        onBack={() => router.back()}
+        rightIcon={<ArrowRight size={22} color="#1E293B" />}
+        onRightPress={() => router.push('/credit')}
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.statsCard}>
@@ -65,32 +60,17 @@ const DictionaryScreen = () => {
 
         {filteredCharacters.length > 0 ? (
           filteredCharacters.map((char) => (
-            <View key={char.id} style={styles.charCard}>
-              <View style={styles.cardHeader}>
-                <View style={[styles.iconWrapper, { backgroundColor: char.color }]}> 
-                  <Heart size={24} color={char.iconColor} fill={char.iconColor} />
-                </View>
-                <View style={styles.cardTitleContainer}>
-                  <Text style={styles.charName}>{char.name}</Text>
-                  <View style={styles.tagBadge}>
-                    <Text style={styles.tagText}>{char.tag}</Text>
-                  </View>
-                </View>
-              </View>
-
-              <Text style={styles.charDescription}>{char.description}</Text>
-
-              <View style={styles.cardFooter}>
-                <TouchableOpacity style={styles.actionButton} activeOpacity={0.6}>
-                  <Smile size={16} color="#64748B" />
-                  <Text style={styles.actionText}>성향분석</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.actionButton} activeOpacity={0.6}>
-                  <Activity size={16} color="#64748B" />
-                  <Text style={styles.actionText}>가중치 정보</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <CharacterCard
+              key={char.id}
+              id={char.id}
+              name={char.name}
+              description={char.description}
+              tag={char.tag}
+              color={char.color}
+              iconColor={char.iconColor}
+              onAnalyze={() => {}}
+              onDetails={() => {}}
+            />
           ))
         ) : (
           <View style={styles.emptyContainer}>

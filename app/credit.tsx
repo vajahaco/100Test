@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Linking } from 'r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
-import { ArrowLeft, Code2, Heart, Sparkles, Layers, ExternalLink, BookOpen } from 'lucide-react-native';
+import { Code2, Heart, Sparkles, Layers, ExternalLink, BookOpen } from 'lucide-react-native';
+import ScreenHeader from '../src/components/ScreenHeader';
 
 const CreditScreen = () => {
   const handleOpenLink = (url: string) => {
@@ -12,17 +13,7 @@ const CreditScreen = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom', 'left', 'right']}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.headerButton}
-          onPress={() => router.back()}
-          activeOpacity={0.6}
-        >
-          <ArrowLeft size={22} color="#1E293B" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>크레딧 및 정보</Text>
-        <View style={styles.headerButtonPlaceholder} />
-      </View>
+      <ScreenHeader title="크레딧 및 정보" onBack={() => router.back()} />
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.artCard}>
