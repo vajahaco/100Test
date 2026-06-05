@@ -2,7 +2,7 @@ import { Question } from '../types/question';
 
 
 
-const repeatedSituations = {
+const SITUATION_TEMPLATES = {
   NEWGF_OF_RENTARO: '당신은 렌타로의 새로운 여자친구입니다.',
   IM_RENTARO: '당신은 렌타로입니다.',
   FRIEND_OF_RENTARO: '당신은 렌타로의 친구입니다.',
@@ -15,7 +15,7 @@ const repeatedSituations = {
 
 const _questions: Omit<Question, 'id'>[] = [
   {  
-    situation: repeatedSituations.IM_RENTARO,
+    situation: SITUATION_TEMPLATES.IM_RENTARO,
     question: "카라네가 하하리를 때리기 직전이다!",
     answers: [
       { 
@@ -46,7 +46,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.FRIEND_OF_RENTARO,
+    situation: SITUATION_TEMPLATES.FRIEND_OF_RENTARO,
     question: "렌타로가 여친때문에 노래방에 못 간다고 한다",
     answers: [
       { 
@@ -77,7 +77,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("쿠스리"),
+    situation: SITUATION_TEMPLATES.WHO("쿠스리"),
     question: "실수로 화학실을 터트린 것이다!",
     answers: [
       { 
@@ -108,7 +108,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.IM_RENTARO,
+    situation: SITUATION_TEMPLATES.IM_RENTARO,
     question: "마이와 메이 씨, 데이트 일정이 겹쳐버렸다!",
     answers: [
       { 
@@ -139,7 +139,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.IM_RENTARO,
+    situation: SITUATION_TEMPLATES.IM_RENTARO,
     question: "날도 선선하니 이런 날에는...",
     answers: [
       { 
@@ -170,7 +170,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("미미미"),
+    situation: SITUATION_TEMPLATES.WHO("미미미"),
     question: "어머, 새로 산 파우치가 진흙탕에 빠져서...",
     answers: [
       { 
@@ -201,7 +201,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.NEWGF_OF_RENTARO,
+    situation: SITUATION_TEMPLATES.NEWGF_OF_RENTARO,
     question: "렌타로패밀리 인원이 너무 많아 ㅠㅠ",
     answers: [
       { 
@@ -237,7 +237,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("우사"),
+    situation: SITUATION_TEMPLATES.WHO("우사"),
     question: "외롭사할 거 같아... 전화를",
     answers: [
       { 
@@ -273,7 +273,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.IM_RENTARO,
+    situation: SITUATION_TEMPLATES.IM_RENTARO,
     question: "쿠스리 선배가 넘어지려는데\n교감선생님이 계셔서 뛸 수가!",
     answers: [
       { 
@@ -309,7 +309,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.IM_RENTARO,
+    situation: SITUATION_TEMPLATES.IM_RENTARO,
     question: "최근 과로로 몸이 부서질 것 같이 피곤한데...",
     answers: [
       { 
@@ -340,7 +340,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("에이라"),
+    situation: SITUATION_TEMPLATES.WHO("에이라"),
     question: "크윽 발에 부상을 입어서 못 걷겠어",
     answers: [
       {
@@ -376,7 +376,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("나노"),
+    situation: SITUATION_TEMPLATES.WHO("나노"),
     question: "요시모토 시즈카가 울고 있어",
     answers: [
       {
@@ -412,7 +412,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("메루"),
+    situation: SITUATION_TEMPLATES.WHO("메루"),
     question: "도저히 메르한(동화책 소재)이\n안 떠올라요",
     answers: [
       {
@@ -448,7 +448,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("모모하"),
+    situation: SITUATION_TEMPLATES.WHO("모모하"),
     question: "제길, 신성한 수업 중인데\n낮술이 미치도록 당긴다!\n칠판이 맥주 캔으로 보여어어!!",
     answers: [
       {
@@ -484,7 +484,7 @@ const _questions: Omit<Question, 'id'>[] = [
     ]
   },
   {  
-    situation: repeatedSituations.WHO("히메카"),
+    situation: SITUATION_TEMPLATES.WHO("히메카"),
     question: "도대체 뭘 해야 남들에게 ‘기인’처럼 보일 수 있을까?!",
     answers: [
       {
