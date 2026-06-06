@@ -12,7 +12,7 @@ const SITUATION_TEMPLATES = {
   }
 } as const;
 
-
+// 질문지 데이터 | question data for the 100kanojo personality test
 const _questions: Omit<Question, 'id'>[] = [
   {  
     situation: SITUATION_TEMPLATES.IM_RENTARO,

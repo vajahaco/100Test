@@ -7,6 +7,7 @@ import { Code2, Heart, Sparkles, Layers, ExternalLink, BookOpen } from 'lucide-r
 import ScreenHeader from '../src/components/ScreenHeader';
 
 const CreditScreen = () => {
+  // 외부 링크 열기 함수 | function to open external links
   const handleOpenLink = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('링크를 열 수 없습니다:', err));
   };
