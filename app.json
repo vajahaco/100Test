@@ -2,6 +2,7 @@
   "expo": {
     "name": "100그녀 인물 검사",
     "slug": "test",
+    "scheme": "test",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,13 +14,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.test"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.anonymous.test",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
@@ -28,7 +31,8 @@
       "lang": "ko"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-status-bar"
     ]
   }
 }
