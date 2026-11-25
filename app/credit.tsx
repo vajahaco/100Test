@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 import { Code2, Heart, Sparkles, Layers, ExternalLink, BookOpen } from 'lucide-react-native';
 import ScreenHeader from '../src/components/ScreenHeader';
+import { colors } from '../src/theme/colors';
 
 const CreditScreen = () => {
   // 외부 링크 열기 함수 | function to open external links
@@ -19,7 +20,7 @@ const CreditScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.artCard}>
           <View style={styles.heartWrapper}>
-            <Heart size={40} color="#E11D48" fill="#E11D48" />
+            <Heart size={40} color={colors.heart} fill={colors.heart} />
           </View>
           <Text style={styles.appName}>100그녀 인물 검사</Text>
           <Text style={styles.appVersion}>Version 1.0.0 (Beta)</Text>
@@ -31,8 +32,8 @@ const CreditScreen = () => {
         <Text style={styles.sectionHeading}>제작자</Text>
         <View style={styles.infoCard}>
           <View style={styles.cardRow}>
-            <View style={[styles.iconWrapper, { backgroundColor: '#EEF2F6' }]}> 
-              <Code2 size={22} color="#4F46E5" />
+            <View style={[styles.iconWrapper, { backgroundColor: colors.primarySoft }]}> 
+              <Code2 size={22} color={colors.primary} />
             </View>
             <View style={styles.rowTextContainer}>
               <Text style={styles.rowTitle}>기획 및 개발</Text>
@@ -44,14 +45,14 @@ const CreditScreen = () => {
             onPress={() => handleOpenLink('https://github.com/vajahaco/100Test')}
             activeOpacity={0.7}
           >
-            <AntDesign name="github" size={30} color="black" />
+            <AntDesign name="github" size={30} color={colors.ink} />
             <Text style={styles.linkButtonText}>프로젝트 깃허브 바로가기</Text>
-            <ExternalLink size={14} color="#94A3B8" />
+            <ExternalLink size={14} color={colors.subtle} />
           </TouchableOpacity>
 
-          <View style={[styles.cardRow, { borderTopWidth: 1, borderColor: '#F1F5F9', marginTop: 12, paddingTop: 12 }]}> 
-            <View style={[styles.iconWrapper, { backgroundColor: '#FFF1F2' }]}> 
-              <Sparkles size={22} color="#E11D48" />
+          <View style={[styles.cardRow, { borderTopWidth: 1, borderColor: colors.line, marginTop: 12, paddingTop: 12 }]}> 
+            <View style={[styles.iconWrapper, { backgroundColor: colors.heartSoft }]}> 
+              <Sparkles size={22} color={colors.heart} />
             </View>
             <View style={styles.rowTextContainer}>
               <Text style={styles.rowTitle}>Details</Text>
@@ -70,24 +71,24 @@ const CreditScreen = () => {
             onPress={() => handleOpenLink('https://shonenjumpplus.com/episode/13933686331623812157')}
             activeOpacity={0.7}
           >
-            <BookOpen size={16} color="#4F46E5" />
+            <BookOpen size={16} color={colors.primary} />
             <Text style={styles.linkButtonText}>원작 정보 확인하기</Text>
-            <ExternalLink size={14} color="#94A3B8" />
+            <ExternalLink size={14} color={colors.subtle} />
           </TouchableOpacity>
         </View>
 
         <Text style={styles.sectionHeading}>사용한 기술 스택</Text>
         <View style={styles.infoCard}>
           <View style={styles.techRow}>
-            <Layers size={16} color="#64748B" />
+            <Layers size={16} color={colors.muted} />
             <Text style={styles.techText}>React Native & Expo Ecosystem</Text>
           </View>
           <View style={styles.techRow}>
-            <Layers size={16} color="#64748B" />
+            <Layers size={16} color={colors.muted} />
             <Text style={styles.techText}>Expo Router (File-based Routing)</Text>
           </View>
           <View style={styles.techRow}>
-            <Layers size={16} color="#64748B" />
+            <Layers size={16} color={colors.muted} />
             <Text style={styles.techText}>Lucide React Native Icons</Text>
           </View>
           <Text style={styles.licenseNotice}>
@@ -110,21 +111,21 @@ export default CreditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
   },
   artCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 28,
     padding: 24,
     alignItems: 'center',
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
-    shadowColor: '#64748B',
+    borderColor: colors.line,
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.04,
     shadowRadius: 12,
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 24,
-    backgroundColor: '#FFF1F2',
+    backgroundColor: colors.heartSoft,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
@@ -142,35 +143,35 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 22,
     fontWeight: '900',
-    color: '#1E293B',
+    color: colors.ink,
     marginBottom: 4,
   },
   appVersion: {
     fontSize: 13,
-    color: '#94A3B8',
+    color: colors.subtle,
     fontWeight: '600',
     marginBottom: 14,
   },
   appDescription: {
     fontSize: 14,
-    color: '#475569',
+    color: colors.inkSoft,
     textAlign: 'center',
     lineHeight: 22,
   },
   sectionHeading: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#475569',
+    color: colors.inkSoft,
     marginBottom: 12,
     paddingLeft: 4,
   },
   infoCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 24,
     padding: 20,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
+    borderColor: colors.line,
   },
   cardRow: {
     flexDirection: 'row',
@@ -190,11 +191,11 @@ const styles = StyleSheet.create({
   rowTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#0F172A',
+    color: colors.ink,
   },
   rowSubTitle: {
     fontSize: 13,
-    color: '#64748B',
+    color: colors.muted,
     marginTop: 4,
   },
   linkButton: {
@@ -205,18 +206,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginTop: 16,
     borderRadius: 18,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   linkButtonText: {
     flex: 1,
     marginLeft: 12,
     fontSize: 14,
-    color: '#1E293B',
+    color: colors.ink,
     fontWeight: '600',
   },
   paragraphText: {
     fontSize: 14,
-    color: '#475569',
+    color: colors.inkSoft,
     lineHeight: 22,
   },
   techRow: {
@@ -227,18 +228,18 @@ const styles = StyleSheet.create({
   techText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#475569',
+    color: colors.inkSoft,
   },
   licenseNotice: {
     marginTop: 16,
-    color: '#64748B',
+    color: colors.muted,
     fontSize: 13,
     lineHeight: 20,
   },
   footerText: {
     marginTop: 24,
     fontSize: 13,
-    color: '#94A3B8',
+    color: colors.subtle,
     lineHeight: 20,
   },
 });

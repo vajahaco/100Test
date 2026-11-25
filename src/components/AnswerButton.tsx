@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { colors } from '../theme/colors';
 
 type AnswerButtonProps = {
   answer: string;
@@ -22,22 +23,27 @@ export default AnswerButton;
 const styles = StyleSheet.create({
   button: {
     width: '100%',
-    paddingVertical: 16,
-    backgroundColor: '#4F46E5',
-    borderRadius: 16,
-    marginBottom: 12,
+    paddingVertical: 15,
+    paddingHorizontal: 16,
+    backgroundColor: colors.surface,
+    borderWidth: 1.5,
+    borderColor: colors.lineStrong,
+    borderRadius: 18,
+    marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: colors.ink,
+    fontSize: 17,
     textAlign: 'center',
     fontWeight: '600',
   },
   selectedButton: {
-    backgroundColor: '#e54646',
+    backgroundColor: colors.mint,
+    borderColor: colors.mint,
   },
   selectedButtonText: {
-    color: '#fff',
-    fontSize: 20,
+    color: colors.surface,
+    fontSize: 17,
+    fontWeight: '700',
   },
 });

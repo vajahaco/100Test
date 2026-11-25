@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Heart, Smile, Activity } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 type CharacterCardProps = {
   id: string;
@@ -39,11 +40,11 @@ const CharacterCard = ({
 
     <View style={styles.cardFooter}>
       <TouchableOpacity style={styles.actionButton} activeOpacity={0.6} onPress={onAnalyze}>
-        <Smile size={16} color="#64748B" />
+        <Smile size={16} color={colors.muted} />
         <Text style={styles.actionText}>성향분석</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton} activeOpacity={0.6} onPress={onDetails}>
-        <Activity size={16} color="#64748B" />
+        <Activity size={16} color={colors.muted} />
         <Text style={styles.actionText}>가중치 정보</Text>
       </TouchableOpacity>
     </View>
@@ -54,12 +55,12 @@ export default CharacterCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 28,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
+    borderColor: colors.line,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -80,11 +81,11 @@ const styles = StyleSheet.create({
   charName: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#0F172A',
+    color: colors.ink,
   },
   tagBadge: {
     marginTop: 6,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 999,
@@ -92,10 +93,10 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#475569',
+    color: colors.inkSoft,
   },
   charDescription: {
-    color: '#64748B',
+    color: colors.muted,
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 16,
@@ -110,11 +111,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 16,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   actionText: {
     marginLeft: 8,
-    color: '#64748B',
+    color: colors.muted,
     fontWeight: '700',
   },
 });

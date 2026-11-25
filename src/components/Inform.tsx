@@ -7,6 +7,7 @@ import {
   TouchableOpacity, 
   Pressable 
 } from 'react-native';
+import { colors } from '../theme/colors';
 
 // 인터페이스로 빼두면 가독성이 훨씬 좋아집니다!
 interface CustomAlertProps {
@@ -49,18 +50,18 @@ export default Inform;
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    backgroundColor: colors.overlay,
     justifyContent: 'center',
     alignItems: 'center',
   },
   alertBox: {
     width: '80%',
-    backgroundColor: 'white',
+    backgroundColor: colors.surface,
     borderRadius: 24, // 조금 더 둥글게 (아까 메인 디자인과 맞춤)
     padding: 24,
     alignItems: 'center',
     elevation: 10,
-    shadowColor: '#000',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.15,
     shadowRadius: 15,
@@ -68,12 +69,12 @@ const styles = StyleSheet.create({
   alertTitle: {
     fontSize: 20, // 살짝 키움
     fontWeight: 'bold',
-    color: '#0F172A',
+    color: colors.ink,
     marginBottom: 12,
   },
   alertMessage: {
     fontSize: 15,
-    color: '#64748B',
+    color: colors.muted,
     textAlign: 'center',
     marginBottom: 28,
     lineHeight: 22,
@@ -82,13 +83,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   confirmButton: {
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 14, // 조금 더 시원하게
     borderRadius: 14,
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
+    color: colors.surface,
     fontWeight: '700',
     fontSize: 16,
   },

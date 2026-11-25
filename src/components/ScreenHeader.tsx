@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 type ScreenHeaderProps = {
   title: string;
@@ -12,7 +13,7 @@ type ScreenHeaderProps = {
 const ScreenHeader = ({ title, onBack, rightIcon, onRightPress }: ScreenHeaderProps) => (
   <View style={styles.header}>
     <TouchableOpacity style={styles.headerButton} onPress={onBack} activeOpacity={0.6}>
-      <ArrowLeft size={22} color="#1E293B" />
+      <ArrowLeft size={22} color={colors.ink} />
     </TouchableOpacity>
 
     <Text style={styles.headerTitle} numberOfLines={1}>
@@ -38,16 +39,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderColor: '#F1F5F9',
+    borderColor: colors.line,
     height: 56,
   },
   headerButton: {
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0F172A',
+    color: colors.ink,
     textAlign: 'center',
   },
 });

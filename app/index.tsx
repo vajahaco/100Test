@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Zap, Users, ChevronRight, Eye } from 'lucide-react-native';
 import Inform from '../src/components/Inform';
 import { Link } from 'expo-router';
+import { colors } from '../src/theme/colors';
 
 const HomeScreen = () => {
   const [show100Alert, setShow100Alert] = useState(false);
@@ -18,15 +19,15 @@ const HomeScreen = () => {
           <Link href="/test" asChild>
             <TouchableOpacity style={styles.sectionButton} activeOpacity={0.6}>
               <View style={styles.leftContent}>
-                <View style={[styles.iconWrapper, { backgroundColor: '#EEF2FF' }]}> 
-                  <Zap size={24} color="#4F46E5" fill="#4F46E5" />
+                <View style={[styles.iconWrapper, { backgroundColor: colors.primarySoft }]}> 
+                  <Zap size={24} color={colors.primary} fill={colors.primary} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.sectionTitle}>빠른 검사</Text>
                   <Text style={styles.sectionSubTitle}>핵심 질문으로 빠르게 확인하기</Text>
                 </View>
               </View>
-              <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
+              <ChevronRight size={20} color={colors.faint} strokeWidth={3} />
             </TouchableOpacity>
           </Link>
 
@@ -38,15 +39,15 @@ const HomeScreen = () => {
             onPress={() => setShow100Alert(true)}
           >
             <View style={styles.leftContent}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#FFF1F2' }]}> 
-                <Users size={24} color="#E11D48" fill="#E11D48" />
+              <View style={[styles.iconWrapper, { backgroundColor: colors.heartSoft }]}> 
+                <Users size={24} color={colors.heart} fill={colors.heart} />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={styles.sectionTitle}>100 검사</Text>
                 <Text style={styles.sectionSubTitle}>100가지 질문으로 모든 100여친 인물 검사</Text>
               </View>
             </View>
-            <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
+            <ChevronRight size={20} color={colors.faint} strokeWidth={3} />
           </TouchableOpacity>
 
           <View style={styles.divider} />
@@ -57,15 +58,15 @@ const HomeScreen = () => {
               activeOpacity={0.6}
             >
               <View style={styles.leftContent}>
-                <View style={[styles.iconWrapper, { backgroundColor: '#1e293b18' }]}> 
-                  <Eye size={24} color="#000000" fill="#ffffff" />
+                <View style={[styles.iconWrapper, { backgroundColor: colors.mintSoft }]}> 
+                  <Eye size={24} color={colors.mint} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.sectionTitle}>도감 및 정보</Text>
                   <Text style={styles.sectionSubTitle}>빠른 검사에 등록된 여친들 및 기타 정보 보기</Text>
                 </View>
               </View>
-              <ChevronRight size={20} color="#CBD5E1" strokeWidth={3} />
+              <ChevronRight size={20} color={colors.faint} strokeWidth={3} />
             </TouchableOpacity>
           </Link>
         </View>
@@ -88,7 +89,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   content: {
     flex: 1,
@@ -99,21 +100,21 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '900',
     textAlign: 'center',
-    color: '#0F172A',
+    color: colors.ink,
     marginBottom: 40,
     letterSpacing: -0.5,
   },
   mainBox: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 32,
     padding: 10,
-    shadowColor: '#64748B',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.08,
     shadowRadius: 20,
     elevation: 8,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
+    borderColor: colors.line,
   },
   sectionButton: {
     flexDirection: 'row',
@@ -139,23 +140,23 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 19,
     fontWeight: 'bold',
-    color: '#1E293B',
+    color: colors.ink,
     marginBottom: 4,
   },
   sectionSubTitle: {
     fontSize: 14,
-    color: '#94A3B8',
+    color: colors.subtle,
   },
   divider: {
     height: 1,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     marginHorizontal: 20,
   },
   footerText: {
     textAlign: 'center',
     marginTop: 32,
     fontSize: 13,
-    color: '#CBD5E1',
+    color: colors.faint,
     fontWeight: '500',
   },
 });

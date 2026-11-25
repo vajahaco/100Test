@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Crown, Heart, RotateCcw, Home, Vote, BarChart3 } from 'lucide-react-native';
+import { Sparkles, Heart, RotateCcw, Home, BarChart3, Flower2 } from 'lucide-react-native';
 import ScreenHeader from '../src/components/ScreenHeader';
 import { questions } from '../src/data/questionData';
 import {
@@ -13,6 +13,7 @@ import {
   formatVotes,
   runElection,
 } from '../src/utils/election';
+import { colors } from '../src/theme/colors';
 
 const goHome = () => router.replace('/');
 const retryTest = () => router.replace('/test');
@@ -75,7 +76,7 @@ const ResultScreen = () => {
             검사를 끝까지 마쳐야 결과를 볼 수 있습니다.{'\n'}처음부터 다시 검사해 주세요!
           </Text>
           <TouchableOpacity style={styles.primaryButton} onPress={retryTest} activeOpacity={0.8}>
-            <RotateCcw size={18} color="#fff" />
+            <RotateCcw size={18} color={colors.surface} />
             <Text style={styles.primaryButtonText}>검사하러 가기</Text>
           </TouchableOpacity>
         </View>
@@ -83,7 +84,7 @@ const ResultScreen = () => {
     );
   }
 
-  const { winner, ranking, userProfile, totalVotes, abstentions } = result;
+  const { winner, ranking, userProfile, abstentions } = result;
   const maxSupport = Math.max(...ranking.map((c) => c.supportRate), 1);
   const formatSupport = (rate: number) => `${Math.round(rate * 100)}%`;
 
@@ -92,11 +93,11 @@ const ResultScreen = () => {
       <ScreenHeader title="검사 결과" onBack={goHome} />
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* 당선 카드 | winner card */}
+        {/* 운명의 상대 카드 | best match card */}
         <View style={[styles.winnerCard, { borderColor: winner.character.iconColor }]}>
           <View style={styles.crownBadge}>
-            <Crown size={16} color="#CA8A04" fill="#FACC15" />
-            <Text style={styles.crownText}>당선!</Text>
+            <Sparkles size={16} color={colors.sun} fill={colors.sunBright} />
+            <Text style={styles.crownText}>운명의 상대</Text>
           </View>
           <View style={[styles.winnerIcon, { backgroundColor: winner.character.color }]}>
             <Heart size={44} color={winner.character.iconColor} fill={winner.character.iconColor} />
@@ -114,14 +115,14 @@ const ResultScreen = () => {
             <View style={styles.statBox}>
               <Text style={styles.statValue}>
                 {formatVotes(winner.votes)}
-                <Text style={styles.statUnit}> 표</Text>
+                <Text style={styles.statUnit}> 개</Text>
               </Text>
-              <Text style={styles.statLabel}>득표</Text>
+              <Text style={styles.statLabel}>닮은 답변</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statBox}>
               <Text style={styles.statValue}>{formatSupport(winner.supportRate)}</Text>
-              <Text style={styles.statLabel}>지지율</Text>
+              <Text style={styles.statLabel}>궁합 지수</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statBox}>
@@ -134,17 +135,17 @@ const ResultScreen = () => {
           </View>
         </View>
 
-        {/* 개표 결과 | vote count */}
+        {/* 궁합 순위 | compatibility ranking */}
         <View style={styles.sectionHeader}>
-          <Vote size={18} color="#4F46E5" />
-          <Text style={styles.sectionHeading}>개표 결과</Text>
+          <Flower2 size={18} color={colors.primary} />
+          <Text style={styles.sectionHeading}>여친별 궁합 순위</Text>
         </View>
         <View style={styles.infoCard}>
           <Text style={styles.cardCaption}>
-            답변 {questions.length}개가 각각 가장 닮은 여친에게 한 표씩 투표했어요.{'\n'}
-            유효표 {totalVotes}표 · 무효표 {abstentions}표{'\n'}
-            당선은 <Text style={styles.captionStrong}>지지율</Text>(득표 ÷ 아무렇게나 답했을 때의 기대 득표)로
-            정해서, 질문지에 선택지가 많은 여친이 유리하지 않게 했어요.
+            답변 {questions.length}개마다 나와 가장 닮은 여친을 찾아봤어요.
+            {abstentions > 0 ? ` (어느 여친과도 겹치지 않은 답변 ${abstentions}개)` : ''}{'\n'}
+            <Text style={styles.captionStrong}>궁합 지수</Text>는 닮은 답변이 평균보다 얼마나 많은지를
+            나타내요. 100%가 평균이에요.
           </Text>
           {ranking.map((candidate, index) => (
             <View key={candidate.character.id} style={styles.rankRow}>
@@ -154,7 +155,7 @@ const ResultScreen = () => {
                   <Text style={styles.rankName} numberOfLines={1}>
                     {candidate.character.name}
                   </Text>
-                  <Text style={styles.rankVotes}>지지율 {formatSupport(candidate.supportRate)}</Text>
+                  <Text style={styles.rankVotes}>궁합 {formatSupport(candidate.supportRate)}</Text>
                 </View>
                 <View style={styles.voteTrack}>
                   <View
@@ -168,7 +169,7 @@ const ResultScreen = () => {
                   />
                 </View>
                 <Text style={styles.rankMatch}>
-                  {formatVotes(candidate.votes)}표 (기대 {candidate.expectedVotes.toFixed(1)}표) · 성향 일치율{' '}
+                  닮은 답변 {formatVotes(candidate.votes)}개 (평균 {candidate.expectedVotes.toFixed(1)}개) · 성향 일치율{' '}
                   {candidate.matchRate}%
                 </Text>
               </View>
@@ -178,7 +179,7 @@ const ResultScreen = () => {
 
         {/* 나의 성향 | my traits */}
         <View style={styles.sectionHeader}>
-          <BarChart3 size={18} color="#4F46E5" />
+          <BarChart3 size={18} color={colors.primary} />
           <Text style={styles.sectionHeading}>나의 성향 분석</Text>
         </View>
         <View style={styles.infoCard}>
@@ -188,11 +189,11 @@ const ResultScreen = () => {
         </View>
 
         <TouchableOpacity style={styles.primaryButton} onPress={retryTest} activeOpacity={0.8}>
-          <RotateCcw size={18} color="#fff" />
+          <RotateCcw size={18} color={colors.surface} />
           <Text style={styles.primaryButtonText}>다시 검사하기</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.secondaryButton} onPress={goHome} activeOpacity={0.8}>
-          <Home size={18} color="#4F46E5" />
+          <Home size={18} color={colors.primary} />
           <Text style={styles.secondaryButtonText}>처음으로</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -205,7 +206,7 @@ export default ResultScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     padding: 20,
@@ -215,13 +216,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   winnerCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 28,
     borderWidth: 2,
     padding: 24,
     alignItems: 'center',
     marginBottom: 28,
-    shadowColor: '#64748B',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.08,
     shadowRadius: 16,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   crownBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FEF9C3',
+    backgroundColor: colors.sunSoft,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 999,
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
   },
   crownText: {
     marginLeft: 6,
-    color: '#A16207',
+    color: colors.sunInk,
     fontWeight: '800',
     fontSize: 13,
   },
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   },
   winnerLabel: {
     fontSize: 14,
-    color: '#64748B',
+    color: colors.muted,
     marginBottom: 6,
   },
   winnerName: {
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tagBadge: {
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 999,
@@ -271,11 +272,11 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#475569',
+    color: colors.inkSoft,
   },
   winnerDescription: {
     fontSize: 15,
-    color: '#475569',
+    color: colors.inkSoft,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 20,
@@ -283,7 +284,7 @@ const styles = StyleSheet.create({
   winnerStats: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
     borderRadius: 20,
     paddingVertical: 14,
     width: '100%',
@@ -295,22 +296,22 @@ const styles = StyleSheet.create({
   statDivider: {
     width: 1,
     height: 32,
-    backgroundColor: '#E2E8F0',
+    backgroundColor: colors.lineStrong,
   },
   statValue: {
     fontSize: 22,
     fontWeight: '900',
-    color: '#1E293B',
+    color: colors.ink,
   },
   statUnit: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#64748B',
+    color: colors.muted,
   },
   statLabel: {
     marginTop: 2,
     fontSize: 12,
-    color: '#94A3B8',
+    color: colors.subtle,
     fontWeight: '600',
   },
   sectionHeader: {
@@ -323,25 +324,25 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#334155',
+    color: colors.inkSoft,
   },
   infoCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 24,
     padding: 20,
     marginBottom: 28,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
+    borderColor: colors.line,
   },
   cardCaption: {
     fontSize: 13,
-    color: '#64748B',
+    color: colors.muted,
     lineHeight: 20,
     marginBottom: 16,
   },
   captionStrong: {
     fontWeight: '700',
-    color: '#4F46E5',
+    color: colors.primary,
   },
   rankRow: {
     flexDirection: 'row',
@@ -352,11 +353,11 @@ const styles = StyleSheet.create({
     width: 26,
     fontSize: 16,
     fontWeight: '800',
-    color: '#94A3B8',
+    color: colors.subtle,
     marginTop: 1,
   },
   rankNumberFirst: {
-    color: '#CA8A04',
+    color: colors.sun,
   },
   rankBody: {
     flex: 1,
@@ -371,18 +372,18 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: '700',
-    color: '#0F172A',
+    color: colors.ink,
     marginRight: 8,
   },
   rankVotes: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#1E293B',
+    color: colors.ink,
   },
   voteTrack: {
     height: 10,
     borderRadius: 999,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     overflow: 'hidden',
   },
   voteFill: {
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
   rankMatch: {
     marginTop: 4,
     fontSize: 12,
-    color: '#94A3B8',
+    color: colors.subtle,
   },
   traitRow: {
     marginBottom: 16,
@@ -405,19 +406,19 @@ const styles = StyleSheet.create({
   traitName: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#1E293B',
+    color: colors.ink,
     marginBottom: 6,
   },
   traitValue: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#4F46E5',
+    color: colors.primary,
     marginBottom: 6,
   },
   traitTrack: {
     height: 12,
     borderRadius: 999,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: colors.line,
     overflow: 'hidden',
     position: 'relative',
   },
@@ -428,7 +429,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: 2,
     marginLeft: -1,
-    backgroundColor: '#CBD5E1',
+    backgroundColor: colors.faint,
   },
   traitFill: {
     position: 'absolute',
@@ -436,24 +437,24 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   positiveFill: {
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.mint,
   },
   negativeFill: {
-    backgroundColor: '#F43F5E',
+    backgroundColor: colors.primary,
   },
   madnessFill: {
-    backgroundColor: '#CA8A04',
+    backgroundColor: colors.sun,
   },
   traitEdge: {
     marginTop: 4,
     fontSize: 11,
-    color: '#94A3B8',
+    color: colors.subtle,
   },
   primaryButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 16,
@@ -461,7 +462,7 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: {
     marginLeft: 8,
-    color: '#fff',
+    color: colors.surface,
     fontSize: 17,
     fontWeight: '700',
   },
@@ -469,13 +470,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EEF2FF',
+    backgroundColor: colors.primarySoft,
     paddingVertical: 16,
     borderRadius: 16,
   },
   secondaryButtonText: {
     marginLeft: 8,
-    color: '#4F46E5',
+    color: colors.primary,
     fontSize: 17,
     fontWeight: '700',
   },
@@ -488,12 +489,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#0F172A',
+    color: colors.ink,
     marginBottom: 10,
   },
   emptyText: {
     fontSize: 15,
-    color: '#64748B',
+    color: colors.muted,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 24,

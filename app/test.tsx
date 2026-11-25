@@ -9,6 +9,7 @@ import { useInform } from '../src/hooks/useInform';
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
 import { encodeAnswers } from '../src/utils/election';
+import { colors } from '../src/theme/colors';
 
 type ListItem = { isGuide: true; id: string } | (Question & { isGuide?: false });
 
@@ -56,9 +57,9 @@ const SurveyFlatList = () => {
     <View style={[styles.page, { height }]}>
       <View style={styles.guideBox}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 15, alignItems: 'center' }}>
-          <Heart color={'#f00'} fill={'#f00'} style={{ marginRight: 10 }} />
+          <Heart color={colors.heart} fill={colors.heart} style={{ marginRight: 10 }} />
           <Text style={styles.guideTitle}>100그녀 테스트 안내사항</Text>
-          <Heart color={'#f00'} fill={'#f00'} style={{ marginLeft: 10 }} />
+          <Heart color={colors.heart} fill={colors.heart} style={{ marginLeft: 10 }} />
         </View>
         <Text style={styles.guideText}>
           <Text style={styles.highlightText}>상하 스크롤</Text>
@@ -145,62 +146,62 @@ const styles = StyleSheet.create({
   page: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   card: {
     width: '90%',
     maxWidth: 500,
-    backgroundColor: '#fff',
+    backgroundColor: colors.surface,
     padding: 30,
     borderRadius: 24,
-    shadowColor: '#000',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 5,
   },
-  questionNumber: { fontSize: 16, color: '#94A3B8', marginBottom: 8, fontWeight: '600' },
+  questionNumber: { fontSize: 16, color: colors.subtle, marginBottom: 8, fontWeight: '600' },
   situationText: {
     fontSize: 15,
-    color: '#64748B',
+    color: colors.muted,
     textAlign: 'center',
     marginBottom: 10,
     fontWeight: '500',
     fontStyle: 'italic',
   },
-  questionText: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginBottom: 40 },
+  questionText: { fontSize: 24, fontWeight: 'bold', color: colors.ink, textAlign: 'center', marginBottom: 40 },
   guideBox: {
     width: '90%',
     maxWidth: 500,
-    backgroundColor: '#e3f2fd',
+    backgroundColor: colors.mintSoft,
     padding: 24,
     borderRadius: 24,
     borderWidth: 1,
-    borderColor: '#90caf9',
+    borderColor: colors.mintLine,
   },
   guideTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#0d47a1',
+    color: colors.mintInk,
   },
   guideText: {
     fontSize: 15,
-    color: '#334155',
+    color: colors.inkSoft,
     lineHeight: 24,
   },
   highlightText: {
     fontWeight: 'bold',
-    color: '#0d47a1',
+    color: colors.mintInk,
     fontSize: 16,
   },
   startButton: {
     marginTop: 20,
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 16,
   },
   startButtonText: {
-    color: '#fff',
+    color: colors.surface,
     fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',

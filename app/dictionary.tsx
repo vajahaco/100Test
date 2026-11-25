@@ -9,6 +9,7 @@ import Inform from '../src/components/Inform';
 import { characters } from '../src/data/characterData';
 import { Character } from '../src/types/character';
 import { TRAIT_KEYS, TRAIT_LABELS } from '../src/utils/election';
+import { colors } from '../src/theme/colors';
 
 type InfoModal = { title: string; message: string } | null;
 
@@ -50,14 +51,14 @@ const DictionaryScreen = () => {
       <ScreenHeader
         title="여친 도감 및 정보"
         onBack={() => router.back()}
-        rightIcon={<ArrowRight size={22} color="#1E293B" />}
+        rightIcon={<ArrowRight size={22} color={colors.ink} />}
         onRightPress={() => router.push('/credit')}
       />
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.statsCard}>
           <View style={styles.statsHeader}>
-            <Sparkles size={20} color="#4F46E5" fill="#4F46E5" />
+            <Sparkles size={20} color={colors.primary} fill={colors.primary} />
             <Text style={styles.statsTitle}>현재 등록 현황</Text>
           </View>
           <Text style={styles.statsCount}>
@@ -67,11 +68,11 @@ const DictionaryScreen = () => {
         </View>
 
         <View style={styles.searchContainer}>
-          <Search size={20} color="#94A3B8" style={styles.searchIcon} />
+          <Search size={20} color={colors.subtle} style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="이름 또는 특징 검색..."
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.subtle}
             value={searchQuery}
             onChangeText={setSearchQuery}
             spellCheck={false}
@@ -116,20 +117,20 @@ export default DictionaryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
   },
   statsCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 24,
     padding: 20,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#F1F5F9',
-    shadowColor: '#64748B',
+    borderColor: colors.line,
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.04,
     shadowRadius: 10,
@@ -143,31 +144,31 @@ const styles = StyleSheet.create({
   statsTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#4F46E5',
+    color: colors.primary,
     marginLeft: 6,
   },
   statsCount: {
     fontSize: 28,
     fontWeight: '900',
-    color: '#1E293B',
+    color: colors.ink,
     marginBottom: 4,
   },
   statsHighlight: {
-    color: '#E11D48',
+    color: colors.heart,
   },
   statsSubText: {
     fontSize: 13,
-    color: '#94A3B8',
+    color: colors.subtle,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 20,
     paddingHorizontal: 16,
     height: 54,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: colors.lineStrong,
     marginBottom: 24,
   },
   searchIcon: {
@@ -176,13 +177,13 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1E293B',
+    color: colors.ink,
     fontWeight: '500',
   },
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#334155',
+    color: colors.inkSoft,
     marginBottom: 16,
     paddingLeft: 4,
   },
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    color: '#94A3B8',
+    color: colors.subtle,
     fontSize: 15,
   },
 });
