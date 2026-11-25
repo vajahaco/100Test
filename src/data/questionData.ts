@@ -144,12 +144,12 @@ const _questions: Omit<Question, 'id'>[] = [
     answers: [
       { 
         answer: '오랜만에 친구랑 놀기!', 
-        weight: { openness: 0, conscientiousness: 0, extraversion: -1, agreeableness: 0, neuroticism: 0, madness: 0 }, 
+        weight: { openness: 0, conscientiousness: -1, extraversion: 2, agreeableness: 1, neuroticism: 0, madness: 0 }, 
         id: 0 
       },
       { 
         answer: '영상 시청이나 게임하기!', 
-        weight: { openness: 1, conscientiousness: 1, extraversion: 2, agreeableness: 2, neuroticism: -1, madness: 0 }, 
+        weight: { openness: 0, conscientiousness: -1, extraversion: -2, agreeableness: 0, neuroticism: 0, madness: 0 }, 
         id: 1 
       },
       { 
@@ -319,7 +319,7 @@ const _questions: Omit<Question, 'id'>[] = [
       },
       { 
         answer: '따뜻한 목욕탕에 가서 힐링을 즐긴다', 
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        weight: { openness: 0, conscientiousness: 0, extraversion: 0, agreeableness: 0, neuroticism: -2, madness: 0 }, 
         id: 1 
       },
       { 
@@ -345,32 +345,32 @@ const _questions: Omit<Question, 'id'>[] = [
     answers: [
       {
         answer: '모미지한테 치유의 마사지를 부탁해볼까?', 
-        // 기본적이고 평범한 생리적 욕구 충실 (성실성 1, 덤덤함 -1)
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 친구의 손길(마사지)에 기대는 교감형 (외향 1, 우호 1)
+        weight: { openness: 0, conscientiousness: 0, extraversion: 1, agreeableness: 1, neuroticism: 0, madness: 0 }, 
         id: 0 
       },
       { 
         answer: '치유 선생님에게 응급처치법을 물어볼까?', 
-        // 힐링과 정서적 안정을 추구 (신경증 -1)
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 정석대로 응급처치를 배우는 이성파 (성실 2)
+        weight: { openness: -1, conscientiousness: 2, extraversion: 0, agreeableness: 0, neuroticism: -1, madness: 0 }, 
         id: 1 
       },
       { 
         answer: '하하리 씨에게 차 좀 태워달라고 해볼까?', 
-        // 피곤할 때 도리어 나가는 극단적 에너자이저 (외향성 2, 성실성 -1)
-        weight: { openness: 1, conscientiousness: -1, extraversion: 2, agreeableness: 0, neuroticism: 0, madness: 0 }, 
+        // 하하리 씨의 차라는 위험한 선택지 (외향 2, 광기 1)
+        weight: { openness: 1, conscientiousness: -1, extraversion: 2, agreeableness: 0, neuroticism: 0, madness: 1 }, 
         id: 2 
       },
       { 
         answer: '일단 제자리에서 쉬어볼까?', 
-        // 다소 무기력하고 즉흥적인 휴식 (성실성 -1, 외향성 -1)
-        weight: { openness: -1, conscientiousness: -1, extraversion: -1, agreeableness: 0, neuroticism: 1, madness: 0 }, 
+        // 혼자 참고 버티는 소극형 (외향 -2, 신경증 1)
+        weight: { openness: -1, conscientiousness: -1, extraversion: -2, agreeableness: 0, neuroticism: 1, madness: 0 }, 
         id: 3 
       }, 
       { 
         answer: '비싸지만 확실한 진심 구조단을 호출할까?', 
-        // 쉬는 와중에도 끊임없이 생산적인 일을 찾는 워커홀릭 (성실성 2, 외향성 -1)
-        weight: { openness: -1, conscientiousness: 2, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 비싸도 일단 부르고 보는 과잉 대응 (성실 -2, 광기 1)
+        weight: { openness: 1, conscientiousness: -2, extraversion: 1, agreeableness: -1, neuroticism: 1, madness: 1 }, 
         id: 4 
       },
     ]
@@ -381,32 +381,32 @@ const _questions: Omit<Question, 'id'>[] = [
     answers: [
       {
         answer: '이유를 물어 해결하는게 효율적.', 
-        //!! 다소 강압적이면서도 작중 전개상 새여친가 찌리릿하기 위해선 필수불가결적이게 효과적인 방법
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 원인 분석 후 해결하는 나노식 효율 (성실 2, 신경증 -2)
+        weight: { openness: -1, conscientiousness: 2, extraversion: 0, agreeableness: 0, neuroticism: -2, madness: 0 }, 
         id: 0 
       },
       { 
         answer: "'우선 곁에만 있어주기'", 
-        // 힐링과 정서적 안정을 추구 (신경증 -1)
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 말없이 곁을 지키는 다정함 (우호 2)
+        weight: { openness: 0, conscientiousness: 0, extraversion: -1, agreeableness: 2, neuroticism: 0, madness: 0 }, 
         id: 1 
       },
       { 
         answer: '렌타로를 부르는 게 합리적.', 
-        // 피곤할 때 도리어 나가는 극단적 에너자이저 (외향성 2, 성실성 -1)
-        weight: { openness: 1, conscientiousness: -1, extraversion: 2, agreeableness: 0, neuroticism: 0, madness: 0 }, 
+        // 해결사 렌타로에게 맡기는 합리적 판단 (성실 1, 외향 1)
+        weight: { openness: 0, conscientiousness: 1, extraversion: 1, agreeableness: 1, neuroticism: -1, madness: 0 }, 
         id: 2 
       },
       { 
-        answer: "'요시즈카를 꽉 껴앉아 준다'", 
-        // 다소 무기력하고 즉흥적인 휴식 (성실성 -1, 외향성 -1)
-        weight: { openness: -1, conscientiousness: -1, extraversion: -1, agreeableness: 0, neuroticism: 1, madness: 0 }, 
+        answer: "'시즈카를 꽉 껴안아 준다'", 
+        // 망설임 없는 스킨십 위로 (외향 2, 우호 2)
+        weight: { openness: 1, conscientiousness: -1, extraversion: 2, agreeableness: 2, neuroticism: 0, madness: 0 }, 
         id: 3 
       }, 
       { 
         answer: "'모두에게 이 일을 상담하기'", 
-        // 쉬는 와중에도 끊임없이 생산적인 일을 찾는 워커홀릭 (성실성 2, 외향성 -1)
-        weight: { openness: -1, conscientiousness: 2, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 모두를 불러 모으는 걱정 많은 인싸 (외향 2, 신경증 1)
+        weight: { openness: 0, conscientiousness: 0, extraversion: 2, agreeableness: 1, neuroticism: 1, madness: 0 }, 
         id: 4 
       },
     ]
@@ -417,32 +417,32 @@ const _questions: Omit<Question, 'id'>[] = [
     answers: [
       {
         answer: '렌타로에게 최근 있었던 일을 물어요', 
-        //!! 다소 강압적이면서도 작중 전개상 새여친가 찌리릿하기 위해선 필수불가결적이게 효과적인 방법
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 렌타로와의 대화에서 영감 찾기 (외향 1, 우호 1)
+        weight: { openness: 0, conscientiousness: 0, extraversion: 1, agreeableness: 1, neuroticism: 0, madness: 0 }, 
         id: 0 
       },
       { 
         answer: '시즈카가 재밌게 본 이야기를 들어봐요', 
-        // 힐링과 정서적 안정을 추구 (신경증 -1)
-        weight: { openness: 0, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 조용한 독서 친구에게 이야기 듣기 (개방 1, 외향 -1)
+        weight: { openness: 1, conscientiousness: 0, extraversion: -1, agreeableness: 1, neuroticism: 0, madness: 0 }, 
         id: 1 
       },
       { 
         answer: '유치원에 봉사하러 가봐요', 
-        // 피곤할 때 도리어 나가는 극단적 에너자이저 (외향성 2, 성실성 -1)
-        weight: { openness: 1, conscientiousness: -1, extraversion: 2, agreeableness: 0, neuroticism: 0, madness: 0 }, 
+        // 직접 아이들을 만나러 가는 행동파 (외향 2, 우호 2)
+        weight: { openness: 1, conscientiousness: 1, extraversion: 2, agreeableness: 2, neuroticism: 0, madness: 0 }, 
         id: 2 
       },
       { 
         answer: '기존에 썼던 이야기를 변주해봐요', 
-        // 다소 무기력하고 즉흥적인 휴식 (성실성 -1, 외향성 -1)
-        weight: { openness: -1, conscientiousness: -1, extraversion: -1, agreeableness: 0, neuroticism: 1, madness: 0 }, 
+        // 익숙한 것을 다듬는 안정 지향 (개방 -1, 성실 1)
+        weight: { openness: -1, conscientiousness: 1, extraversion: -1, agreeableness: 0, neuroticism: 0, madness: 0 }, 
         id: 3 
       }, 
       { 
         answer: '다른 동화책을 읽어요', 
-        // 쉬는 와중에도 끊임없이 생산적인 일을 찾는 워커홀릭 (성실성 2, 외향성 -1)
-        weight: { openness: -1, conscientiousness: 2, extraversion: -1, agreeableness: 0, neuroticism: -1, madness: 0 }, 
+        // 혼자 묵묵히 자료 조사 (외향 -2)
+        weight: { openness: 0, conscientiousness: 1, extraversion: -2, agreeableness: 0, neuroticism: -1, madness: 0 }, 
         id: 4 
       },
     ]
@@ -454,31 +454,27 @@ const _questions: Omit<Question, 'id'>[] = [
       {
         answer: '물 마시는 척 보온병에 담긴 벚꽃주를 마신다',
         weight: { openness: 2, conscientiousness: -2, extraversion: -1, agreeableness: -0, neuroticism: 1, madness: 1 },
-        // [Reason] 수업 중에 대담하게 술을 빠는 상식 파괴 행위이므로 기행력(+2), 노답 충동성(-2)과 함께 모모하의 일상적 광기(madness: 1)를 반영함.
         id: 0
       },
       {
         answer: '학생들에게 자습을 시키고 당당하게 교무실로 도망친다',
         weight: { openness: 1, conscientiousness: -2, extraversion: 2, agreeableness: -1, neuroticism: -1, madness: 0 },
-        // [Reason] 교사로서의 책임을 팽개치고 당당하게 마이웨이를 걷는 태도이므로 도덕성 최하치(-2) 및 뻔뻔한 외향성(+2) 부여.
         id: 1
       },
       {
         answer: '“취객의 도덕적 문제점을 알아보자!”라며 수업 하는 척 자연스럽게 술을 깐다',
         weight: { openness: 2, conscientiousness: -2, extraversion: 2, agreeableness: 1, neuroticism: 0, madness: 1 },
-        // [Reason] 학생들 앞에서 대놓고 술판을 벌이는 100그녀식 세계관 개변급 광기이므로 개방성(+2), 쇼맨십(+2), madness: 1 확정.
         id: 2
       },
       {
         answer: '렌타로의 얼굴을 떠올리며... 꾹 참아본다... 으으으...',
         weight: { openness: -1, conscientiousness: 2, extraversion: -1, agreeableness: 2, neuroticism: 2, madness: 0 },
-        // [Reason] 사랑하는 연인(렌타로)을 위해 본능을 억제하려는 지독한 순애 무브이므로 성실성(+2), 우호성(+2), 금단증상으로 인한 신경증(+2).
         id: 3
       },
       {
         answer: '책상 밑에 숨겨져있는 청주를 홀짝 마신다',
-        weight: { openness: -2, conscientiousness: 2, extraversion: -2, agreeableness: 0, neuroticism: -2, madness: 0 },
-        // [Reason] 모모하라고는 믿을 수 없는 극단적인 상식인이자 철저한 기계적 교육자 모드이므로 개방성(-2), 강철의 평정심(-2)으로 밸런싱.
+        // [Reason] 몰래 숨겨둔 술을 홀짝이는 은밀한 일탈이므로 내향(-2), 충동(-1), 광기(1).
+        weight: { openness: 1, conscientiousness: -1, extraversion: -2, agreeableness: 0, neuroticism: 1, madness: 1 },
         id: 4
       },
     ]

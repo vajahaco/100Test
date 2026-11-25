@@ -1,26 +1,48 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { Search, Sparkles, Heart, Smile, Activity, Eye } from 'lucide-react-native';
-import { ArrowRight } from 'lucide-react-native/icons';
+import { Search, Sparkles, ArrowRight } from 'lucide-react-native';
 import ScreenHeader from '../src/components/ScreenHeader';
 import CharacterCard from '../src/components/CharacterCard';
+import Inform from '../src/components/Inform';
+import { characters } from '../src/data/characterData';
+import { Character } from '../src/types/character';
+import { TRAIT_KEYS, TRAIT_LABELS } from '../src/utils/election';
 
-const mockCharacters = [
-  { id: '1', name: '하나조노 하카리', description: '사교성이 좋고 연애 정보력이 뛰어난 행동파 여친', tag: '외향형 / 우호형', color: '#FFF1F2', iconColor: '#c2479d' },
-  { id: '2', name: '인다 카라네', description: '속마음은 따뜻하지만 표현이 서툰 전형적인 츤데레 여친', tag: '신경증 / 츤데레', color: '#EFF6FF', iconColor: '#2563EB' },
-  { id: '3', name: '요시모토 시즈카', description: '책을 좋아하고 소심하지만 다정한 문학소녀 여친', tag: '내향형 / 우호형', color: '#F0FDF4', iconColor: '#16A34A' },
-  { id: '4', name: '에이아이 나노', description: '이성적이고 효율적인 정보 수집에 능한 강철멘탈 AI형 여친', tag: '성실성 / 이성적', color: '#F8FAFC', iconColor: '#475569' },
-  { id: '5', name: '야쿠젠 쿠스리', description: '화학실의 천재이자 늘 새로운 약을 만들어내는 트릭스터 여친', tag: '개방성 / 광기', color: '#FEF9C3', iconColor: '#CA8A04' },
-  { id: '6', name: '하나조노 하하리', description: '아기들을 극도로 사랑하는 연애의 광전사 여친', tag: '개방성 / 광기', color: '#FEF9C3', iconColor: '#CA8A04' },
-];
+type InfoModal = { title: string; message: string } | null;
+
+// 성향분석: 가장 두드러진 성향 2개를 문장으로 | describe the two strongest traits
+const describeTraits = (character: Character): string => {
+  const strongest = TRAIT_KEYS.filter((k) => k !== 'madness')
+    .map((k) => ({ key: k, value: character.profile[k] }))
+    .filter((t) => t.value !== 0)
+    .sort((a, b) => Math.abs(b.value) - Math.abs(a.value))
+    .slice(0, 2)
+    .map((t) => {
+      const label = TRAIT_LABELS[t.key];
+      return `• ${label.name}: ${t.value > 0 ? label.high : label.low}`;
+    });
+  const madness = character.profile.madness > 0 ? '\n• 광기: 있음 (주의!)' : '';
+  return `${character.description}\n\n${strongest.join('\n')}${madness}`;
+};
+
+// 가중치 정보: 프로필 수치 그대로 | raw profile weights
+const describeWeights = (character: Character): string =>
+  TRAIT_KEYS.map((k) => {
+    const value = character.profile[k];
+    return `${TRAIT_LABELS[k].name}  ${value > 0 ? '+' : ''}${value}`;
+  }).join('\n');
+
 
 const DictionaryScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [infoModal, setInfoModal] = useState<InfoModal>(null);
 
-  const filteredCharacters = mockCharacters.filter((char) =>
-    char.name.includes(searchQuery) || char.description.includes(searchQuery)
+  const filteredCharacters = characters.filter((char) =>
+    char.name.includes(searchQuery) ||
+    char.description.includes(searchQuery) ||
+    char.tag.includes(searchQuery)
   );
 
   return (
@@ -39,7 +61,7 @@ const DictionaryScreen = () => {
             <Text style={styles.statsTitle}>현재 등록 현황</Text>
           </View>
           <Text style={styles.statsCount}>
-            <Text style={styles.statsHighlight}>5</Text> / 100 명
+            <Text style={styles.statsHighlight}>{characters.length}</Text> / 100 명
           </Text>
           <Text style={styles.statsSubText}>빠른 검사에 등록된 핵심 멤버 리스트입니다.</Text>
         </View>
@@ -68,8 +90,8 @@ const DictionaryScreen = () => {
               tag={char.tag}
               color={char.color}
               iconColor={char.iconColor}
-              onAnalyze={() => {}}
-              onDetails={() => {}}
+              onAnalyze={() => setInfoModal({ title: `${char.name} 성향분석`, message: describeTraits(char) })}
+              onDetails={() => setInfoModal({ title: `${char.name} 가중치`, message: describeWeights(char) })}
             />
           ))
         ) : (
@@ -78,6 +100,13 @@ const DictionaryScreen = () => {
           </View>
         )}
       </ScrollView>
+
+      <Inform
+        visible={infoModal !== null}
+        onClose={() => setInfoModal(null)}
+        title={infoModal?.title ?? ''}
+        message={infoModal?.message ?? ''}
+      />
     </SafeAreaView>
   );
 };
@@ -88,33 +117,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8FAFC',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderColor: '#F1F5F9',
-    height: 56,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    backgroundColor: '#F1F5F9',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0F172A',
-    textAlign: 'center',
-    marginHorizontal: 8,
   },
   scrollContent: {
     padding: 20,
@@ -183,70 +185,6 @@ const styles = StyleSheet.create({
     color: '#334155',
     marginBottom: 16,
     paddingLeft: 4,
-  },
-  charCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 28,
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#F1F5F9',
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  iconWrapper: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 14,
-  },
-  cardTitleContainer: {
-    flex: 1,
-  },
-  charName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#0F172A',
-  },
-  tagBadge: {
-    marginTop: 6,
-    backgroundColor: '#F1F5F9',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
-  },
-  tagText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#475569',
-  },
-  charDescription: {
-    color: '#64748B',
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 16,
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 16,
-    backgroundColor: '#F8FAFC',
-  },
-  actionText: {
-    marginLeft: 8,
-    color: '#64748B',
-    fontWeight: '700',
   },
   emptyContainer: {
     paddingVertical: 40,

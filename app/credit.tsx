@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -55,7 +55,7 @@ const CreditScreen = () => {
             </View>
             <View style={styles.rowTextContainer}>
               <Text style={styles.rowTitle}>Details</Text>
-              <Text style={styles.rowSubTitle}>구조 및 질문지는 개발자가 구상하고, 가중치는 Gemini가 조정했습니댜. 디자인과 코드 대부분은 Gemini가 만들었으며 일부 코드 리팩토링 및 보수는 개발자가 담당했습니다.</Text>
+              <Text style={styles.rowSubTitle}>구조 및 질문지는 개발자가 구상하고, 가중치는 Gemini가 조정했습니다. 디자인과 코드 대부분은 Gemini가 만들었으며 일부 코드 리팩토링 및 보수는 개발자가 담당했습니다.</Text>
             </View>
           </View>
         </View>
@@ -111,35 +111,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8FAFC',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderColor: '#F1F5F9',
-    height: 56,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    backgroundColor: '#F1F5F9',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerButtonPlaceholder: {
-    width: 40,
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0F172A',
-    textAlign: 'center',
   },
   scrollContent: {
     padding: 20,

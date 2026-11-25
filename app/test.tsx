@@ -1,4 +1,4 @@
-﻿import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList, View, Text, TouchableOpacity, useWindowDimensions, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { questions as originalQuestions } from '../src/data/questionData';
@@ -8,6 +8,7 @@ import AnswerButton from '../src/components/AnswerButton';
 import { useInform } from '../src/hooks/useInform';
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
+import { encodeAnswers } from '../src/utils/election';
 
 type ListItem = { isGuide: true; id: string } | (Question & { isGuide?: false });
 
@@ -41,12 +42,14 @@ const SurveyFlatList = () => {
     } else if (isAllAnswered) {
       finishAllAnswerInform.openInform();
     } else {
-      handleFinish(currentAnswers);
+      // 마지막 질문에 답했지만 빠진 질문이 있는 경우 | last question answered but some are missing
+      testNotFinishedInform.openInform();
     }
   };
 
-  const handleFinish = (finalAnswers: Record<number, number>) => {
-    testNotFinishedInform.openInform();
+  const goToResult = () => {
+    finishAllAnswerInform.closeInform();
+    router.replace({ pathname: '/result', params: { answers: encodeAnswers(answers) } });
   };
 
   const renderGuideItem = () => (
@@ -100,40 +103,39 @@ const SurveyFlatList = () => {
           );
         })}
       </View>
+    </View>
+  );
 
+  return (
+    <>
+      <FlatList
+        ref={flatListRef}
+        data={combinedData}
+        renderItem={({ item, index }) => (item.isGuide ? renderGuideItem() : renderQuestionItem(item, index))}
+        keyExtractor={(item) => (item.isGuide ? item.id : item.id.toString())}
+        pagingEnabled
+        scrollEnabled
+        getItemLayout={(_, index) => ({
+          length: height,
+          offset: height * index,
+          index,
+        })}
+      />
+  
       <Inform
         visible={testNotFinishedInform.value}
         onClose={testNotFinishedInform.closeInform}
         title='검사 미완료!'
         message={`[누락 항목: ${getMissedQuestionNumbers()}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`}
       />
-
+  
       <Inform
         visible={finishAllAnswerInform.value}
-        onClose={() => {
-          finishAllAnswerInform.closeInform();
-          router.replace('/result');
-        }}
+        onClose={goToResult}
         title='100그녀 인물 검사 종료!'
         message='결과 확인하러 가기'
       />
-    </View>
-  );
-
-  return (
-    <FlatList
-      ref={flatListRef}
-      data={combinedData}
-      renderItem={({ item, index }) => (item.isGuide ? renderGuideItem() : renderQuestionItem(item, index))}
-      keyExtractor={(item) => (item.isGuide ? item.id : item.id.toString())}
-      pagingEnabled
-      scrollEnabled
-      getItemLayout={(_, index) => ({
-        length: height,
-        offset: height * index,
-        index,
-      })}
-    />
+    </>
   );
 };
 
@@ -167,22 +169,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   questionText: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginBottom: 40 },
-  button: {
-    width: '100%',
-    paddingVertical: 16,
-    backgroundColor: '#4F46E5',
-    borderRadius: 16,
-    marginBottom: 12,
-  },
-  buttonText: { color: '#fff', fontSize: 18, textAlign: 'center', fontWeight: '600' },
-  selectedButton: {
-    width: '100%',
-    paddingVertical: 16,
-    backgroundColor: '#e54646',
-    borderRadius: 16,
-    marginBottom: 12,
-  },
-  selectedButtonText: { color: '#fff', fontSize: 20, textAlign: 'center', fontWeight: '600' },
   guideBox: {
     width: '90%',
     maxWidth: 500,
