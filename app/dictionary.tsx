@@ -6,20 +6,13 @@ import { Search, Sparkles, Heart, Smile, Activity, Eye } from 'lucide-react-nati
 import { ArrowRight } from 'lucide-react-native/icons';
 import ScreenHeader from '../src/components/ScreenHeader';
 import CharacterCard from '../src/components/CharacterCard';
+import { girlfriends } from '../src/data/girlfriendsData';
 
-const mockCharacters = [
-  { id: '1', name: '하나조노 하카리', description: '사교성이 좋고 연애 정보력이 뛰어난 행동파 여친', tag: '외향형 / 우호형', color: '#FFF1F2', iconColor: '#c2479d' },
-  { id: '2', name: '인다 카라네', description: '속마음은 따뜻하지만 표현이 서툰 전형적인 츤데레 여친', tag: '신경증 / 츤데레', color: '#EFF6FF', iconColor: '#2563EB' },
-  { id: '3', name: '요시모토 시즈카', description: '책을 좋아하고 소심하지만 다정한 문학소녀 여친', tag: '내향형 / 우호형', color: '#F0FDF4', iconColor: '#16A34A' },
-  { id: '4', name: '에이아이 나노', description: '이성적이고 효율적인 정보 수집에 능한 강철멘탈 AI형 여친', tag: '성실성 / 이성적', color: '#F8FAFC', iconColor: '#475569' },
-  { id: '5', name: '야쿠젠 쿠스리', description: '화학실의 천재이자 늘 새로운 약을 만들어내는 트릭스터 여친', tag: '개방성 / 광기', color: '#FEF9C3', iconColor: '#CA8A04' },
-  { id: '6', name: '하나조노 하하리', description: '아기들을 극도로 사랑하는 연애의 광전사 여친', tag: '개방성 / 광기', color: '#FEF9C3', iconColor: '#CA8A04' },
-];
 
 const DictionaryScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredCharacters = mockCharacters.filter((char) =>
+  const filteredCharacters = girlfriends.filter((char) =>
     char.name.includes(searchQuery) || char.description.includes(searchQuery)
   );
 
@@ -39,7 +32,7 @@ const DictionaryScreen = () => {
             <Text style={styles.statsTitle}>현재 등록 현황</Text>
           </View>
           <Text style={styles.statsCount}>
-            <Text style={styles.statsHighlight}>5</Text> / 100 명
+            <Text style={styles.statsHighlight}>{girlfriends.length}</Text> / 100 명
           </Text>
           <Text style={styles.statsSubText}>빠른 검사에 등록된 핵심 멤버 리스트입니다.</Text>
         </View>

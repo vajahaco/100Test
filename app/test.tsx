@@ -8,15 +8,20 @@ import AnswerButton from '../src/components/AnswerButton';
 import { useInform } from '../src/hooks/useInform';
 import { router } from 'expo-router';
 import { Heart } from 'lucide-react-native';
+import { weight } from '../src/types/question';
+import { CalculateResult, getTopCharacterForAnswer } from '../src/utils/matching'
 
 type ListItem = { isGuide: true; id: string } | (Question & { isGuide?: false });
+
+export const effect = '';
 
 const SurveyFlatList = () => {
   const { height } = useWindowDimensions();
   const flatListRef = useRef<FlatList<ListItem>>(null);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const testNotFinishedInform = useInform(false);
-  const finishAllAnswerInform = useInform(false);
+  const [topGirlfriend, setTopGirlfriend] = useState('');
+  const testNotFinishedInform = useInform();
+  const finishAllAnswerInform = useInform();
 
   const combinedData: ListItem[] = [{ isGuide: true, id: 'guide' }, ...originalQuestions];
 
@@ -39,15 +44,27 @@ const SurveyFlatList = () => {
         animated: true,
       });
     } else if (isAllAnswered) {
-      finishAllAnswerInform.openInform();
-    } else {
       handleFinish(currentAnswers);
+    } else {
+      handleNotFinish(currentAnswers);
     }
   };
 
-  const handleFinish = (finalAnswers: Record<number, number>) => {
-    testNotFinishedInform.openInform();
+  const handleNotFinish = (finalAnswers: Record<number, number>) => {
+    testNotFinishedInform.openInform(
+      '검사 미완료!',
+      `[누락 항목: ${getMissedQuestionNumbers(finalAnswers)}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`,
+    );
   };
+
+  const handleFinish = (finalAnwsers: Record<number, number>) => {
+    setTopGirlfriend(CalculateResult(finalAnwsers).topCharacter);
+    console.log(CalculateResult(finalAnwsers));
+      finishAllAnswerInform.openInform(
+        '100그녀 인물 검사 종료!',
+        '결과 확인하러 가기',
+    );
+  }
 
   const renderGuideItem = () => (
     <View style={[styles.page, { height }]}>
@@ -102,20 +119,23 @@ const SurveyFlatList = () => {
       </View>
 
       <Inform
-        visible={testNotFinishedInform.value}
+        visible={testNotFinishedInform.isOpen}
         onClose={testNotFinishedInform.closeInform}
-        title='검사 미완료!'
-        message={`[누락 항목: ${getMissedQuestionNumbers()}]\n\n빠트린 검사 항목이 있습니다. 모든 검사에 응답해주세요. 해당 사항이 없는 경우 다른 항목을 선택해주세요.`}
+        {...testNotFinishedInform.content}
       />
 
       <Inform
-        visible={finishAllAnswerInform.value}
+        visible={finishAllAnswerInform.isOpen}
         onClose={() => {
           finishAllAnswerInform.closeInform();
-          router.replace('/result');
+          router.replace({
+            pathname: '/[gf]',
+            params: {
+              gf: topGirlfriend.replace(/\s+/g, '-'),
+            }
+          });
         }}
-        title='100그녀 인물 검사 종료!'
-        message='결과 확인하러 가기'
+        {...finishAllAnswerInform.content}
       />
     </View>
   );

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Heart, Smile, Activity } from 'lucide-react-native';
 
 type CharacterCardProps = {
-  id: string;
+  id: string | number;
   name: string;
   description: string;
   tag: string;

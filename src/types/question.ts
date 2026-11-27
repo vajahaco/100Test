@@ -8,11 +8,13 @@ export type CharacteristicType =
 
 // OCEAN + madness로 가중치 확정 및 하나의 답변 정의 | define a type for an answer that includes the OCEAN characteristics and an additional 'madness' characteristic
 // madness는 0 또는 1로 표현되며, 1은 '광기'를 나타냅니다. | 'madness' is represented as either 0 or 1, where 1 indicates 'madness'
+export type weight = Record<CharacteristicType, number> & {
+  madness: 0 | 1; 
+}
+
 export type Answer = {
   answer: string;
-  weight: Record<CharacteristicType, -2 | -1 | 0 | 1 | 2> & {
-    madness: 0 | 1; 
-  };
+  weight: weight;
   id: 0 | 1 | 2 | 3 | 4;
 }
 

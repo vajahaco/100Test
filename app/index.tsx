@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, StatusBar } from 'react-nativ
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Zap, Users, ChevronRight, Eye } from 'lucide-react-native';
 import Inform from '../src/components/Inform';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 const HomeScreen = () => {
   const [show100Alert, setShow100Alert] = useState(false);
@@ -35,7 +35,7 @@ const HomeScreen = () => {
           <TouchableOpacity
             style={styles.sectionButton}
             activeOpacity={0.6}
-            onPress={() => setShow100Alert(true)}
+            onPress={() => router.replace('./App')}
           >
             <View style={styles.leftContent}>
               <View style={[styles.iconWrapper, { backgroundColor: '#FFF1F2' }]}> 

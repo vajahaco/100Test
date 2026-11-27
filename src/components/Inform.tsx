@@ -1,40 +1,22 @@
-import React from 'react'; // useState는 여기서 안 쓰면 빼셔도 됩니다.
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  Modal, 
-  TouchableOpacity, 
-  Pressable 
-} from 'react-native';
+import { StyleSheet, View, Text, Modal, TouchableOpacity, Pressable } from 'react-native';
 
-// 인터페이스로 빼두면 가독성이 훨씬 좋아집니다!
 interface CustomAlertProps {
   visible: boolean;
   onClose: () => void;
-  title: string;
-  message: string;
+  title?: string;
+  message?: string;
 }
 
-const Inform = ({ visible, onClose, title, message }: CustomAlertProps) => {
+const Inform = ({ visible, onClose, title = '', message = '' }: CustomAlertProps) => {
   return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <Pressable style={styles.overlay}>
-        <Pressable style={styles.alertBox} onPress={(e) => e.stopPropagation()}>
+    <Modal transparent visible={visible} animationType="fade" onRequestClose={onClose}>
+      <Pressable style={styles.overlay} onPress={onClose}>
+        <Pressable style={styles.alertBox} onPress={() => {}}>
           <Text style={styles.alertTitle}>{title}</Text>
           <Text style={styles.alertMessage}>{message}</Text>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-              style={styles.confirmButton} 
-              onPress={onClose}
-              activeOpacity={0.8} // 클릭 시 피드백 살짝 조절
-            >
+            <TouchableOpacity style={styles.confirmButton} onPress={onClose} activeOpacity={0.8}>
               <Text style={styles.buttonText}>확인</Text>
             </TouchableOpacity>
           </View>

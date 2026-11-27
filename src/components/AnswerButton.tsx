@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 12,
     textAlign: 'center',
     fontWeight: '600',
   },
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 16,
   },
 });

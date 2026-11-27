@@ -1,13 +1,28 @@
-// useInform.ts
-import { useState } from "react";
+import { useState } from 'react';
+
+export type InformContent = {
+  title: string;
+  message: string;
+};
+
+const defaultContent: InformContent = {
+  title: '',
+  message: '',
+};
 
 export const useInform = (initialState: boolean = false) => {
-  const [value, setInform] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(initialState);
+  const [content, setContent] = useState<InformContent>(defaultContent);
 
-  const toggleInform = () => setInform((prev) => !prev);
-  const openInform = () => setInform(true);
-  const closeInform = () => setInform(false);
+  const openInform = (title: string, message: string) => {
+    setContent({ title, message });
+    setIsOpen(true);
+  };
 
-  // 컴포넌트에서 사용할 값들을 배열이나 객체로 반환
-  return { value, toggleInform, openInform, closeInform };
+  const closeInform = () => {
+    setIsOpen(false);
+    setContent(defaultContent);
+  };
+
+  return { isOpen, content, openInform, closeInform };
 };
